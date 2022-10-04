@@ -15,7 +15,7 @@ void BT(){
         Right();   // 오른쪽으로 가는 함수
         break;
       case 's':
-        Stop();    // 모드를 바꾸는 함수
+        Stop();    // 멈추는 함수
         break;
     }
   }
