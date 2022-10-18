@@ -1,4 +1,4 @@
-void BT(){
+void BlueTooth(){
   if (BT.available()) {
     char bt_value = Serial1.read(); // 앞 : g / 뒤 : b / 좌 : l / 우 : r / 정지 : s
     switch(bt_value){
