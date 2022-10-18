@@ -3,6 +3,10 @@
 #define Back_Trig  32          //Back_Trig 32번핀으로 설정.
 #define Back_Echo  33          //Back_Echo 33번핀으로 설정.
 
+float F_S,B_S = 0;
+//F_S : 앞쪽 초음파센서의 거리를 받아오는 변수 
+//B_S : 뒤쪽 초음파센서의 거리를 받아오는 변수
+
 float F_Sonic()                        //거리값을 받아올 함수.     
 {
    float Front_Length = 0;            //앞쪽 초음파의 송수신 길이를 저장하는 변수 선언
@@ -20,7 +24,7 @@ float F_Sonic()                        //거리값을 받아올 함수.
    //입력받은 신호를 거리로 계산
    Front_Distance = ((float)(340*Front_Length)/10000)/2;
 
-   return Front_Distance;          
+   F_S = Front_Distance;     
 }
 
 float B_Sonic()                        //거리값을 받아올 함수.     
@@ -40,5 +44,5 @@ float B_Sonic()                        //거리값을 받아올 함수.
    //입력받은 신호를 거리로 계산
    Back_Distance = ((float)(340*Back_Length)/10000)/2;      
    
-   return Back_Distance;                                    
+   B_S = Back_Distance;
 }
