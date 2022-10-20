@@ -152,71 +152,62 @@ float B_R_IR()                   //오른쪽 뒤 IR센서의 측정값 저장하
 // 회전 방향
 // 세 번째의 1은 전진, 2는 후진
 
-void moveFront(int spd, float t) {
-  //spd는 0~255의 값으로 모터 속력을 의미
-  //t는 time의 약어로 몇초 동안 이동할지를 의미
-  unsigned char prev_m = 0;
-  unsigned char curr_m = 0;
-  curr_m = millis();
-  if(curr_m - prev_m == t*1000){
-    return;
-  }
+void offLED(){
+  digitalWrite(LED_FL, LOW);
+  digitalWrite(LED_FR, LOW);
+  digitalWrite(LED_BL, LOW);
+  digitalWrite(LED_BR, LOW);
+}
+
+
+void moveFront() {
   digitalWrite(LED_FL, HIGH);
   digitalWrite(LED_FR, HIGH);
+  digitalWrite(LED_BL, LOW);
+  digitalWrite(LED_BR, LOW);
   
-  analogWrite(FL_1, spd);
-  analogWrite(FR_1, spd);
+  analogWrite(FL_1, 128);
+  analogWrite(FR_1, 128);
+  analogWrite(BL_1, 128);
+  analogWrite(BR_1, 128);
 }
 
-void moveLeft(int spd, float t) {
-  //spd는 0~255의 값으로 모터 속력을 의미
-  //t는 time의 약어로 몇ms 동안 이동할지를 의미
-  unsigned char prev_m = 0;
-  unsigned char curr_m = 0;
-  curr_m = millis();
-  if(curr_m - prev_m == t*1000){
-    return;
-  }
+void moveLeft() {
   digitalWrite(LED_FL, HIGH);
   digitalWrite(LED_BL, HIGH);
+  digitalWrite(LED_FR, LOW);
+  digitalWrite(LED_BR, LOW);
   
-  analogWrite(FL_1, spd/10);
-  analogWrite(BR_1, spd/10);
-  analogWrite(FR_1, spd);
+  analogWrite(BL_1, 128/3);
+  analogWrite(FL_1, 128/3);
+  analogWrite(BR_1, 128);
+  analogWrite(FR_1, 128);
 }
 
-void moveright(int spd, float t) {
-  //spd는 0~255의 값으로 모터 속력을 의미
-  //t는 time의 약어로 몇ms 동안 이동할지를 의미
-  unsigned char prev_m = 0;
-  unsigned char curr_m = 0;
-  curr_m = millis();
-  if(curr_m - prev_m == t*1000){
-    return;
-  }
+void moveRight() {
   digitalWrite(LED_FR, HIGH);
   digitalWrite(LED_BR, HIGH);
+  digitalWrite(LED_FL, LOW);
+  digitalWrite(LED_BL, LOW);
   
-  analogWrite(FR_1, spd/10);
-  analogWrite(BL_1, spd/10);
-  analogWrite(FL_1, spd);
+  analogWrite(BR_1, 128/3);
+  analogWrite(FR_1, 128/3);
+  analogWrite(BL_1, 128);
+  analogWrite(FL_1, 128);
 }
 
-void moveBack(int spd, float t) {
-  //spd는 0~255의 값으로 모터 속력을 의미
-  //t는 time의 약어로 몇ms 동안 이동할지를 의미
-  unsigned char prev_m = 0;
-  unsigned char curr_m = 0;
-  curr_m = millis();
-  if(curr_m - prev_m == t*1000){
-    return;
-  }
+void moveBack() {
   digitalWrite(LED_BL, HIGH);
   digitalWrite(LED_BR, HIGH);
+  digitalWrite(LED_FL, LOW);
+  digitalWrite(LED_FR, LOW);
   
-  analogWrite(FL_2, spd);
-  analogWrite(FR_2, spd);
+  analogWrite(FL_2, 128);
+  analogWrite(FR_2, 128);
+  analogWrite(BL_2, 128);
+  analogWrite(BR_2, 128);
 }
+
 
 
 //블루투스 
@@ -282,54 +273,55 @@ void loop() {
       B_R_IR();
       
       if(F_S < 20){ // 앞족에서 거리에 물체가 감지 되면
-        moveFront(20,5); // 속도 줄이기
         if(F_L < 10 && F_R < 10 ){ // 앞쪽 양측에서 물체가 감지 되면
           if(B_L > 10){ // 왼쪽 뒤에 물체가 감지 되지 않으면
-            moveright(100,10);
-            moveBack(100,10);
+            moveright();
+            delay(5);
+            moveBack();
+            delay(5);
           }
           else if(B_R > 10){  // 오른쪽 뒤에 물체가 감지 되지 않으면
-            moveLeft(100,10);
-            moveBack(100,10);
+            moveLeft();
+            delay(5);
+            moveBack();
+            delay(5);
           }
           else //둘다 물체가 감지되면
           {
             if(B_S < 5) // 더이상 뒤로 갈 수 없으면
-            moveFront(50,10);
+            moveFront();
             else
-            moveBack(100,10);
+            moveBack();
           }
           
         }
         else if(F_L < 10){ // 좌측에만 물체가 감지 되면
-            moveright(100,10); // 우회전
+            moveright(); // 우회전
         }
         else if(F_R < 10){ // 우측에만 물체가 감지 되면
-            moveLeft(100,10); // 좌회전
+            moveLeft(); // 좌회전
         }
       }
       else{
-        moveFront(200,10);
+        moveFront();
       }
     }
     else{
       switch (mode)
       {
       case 1:
-        moveFront(255,5);
+        moveFront();
         break;
       case 2:
-        moveBack(255,5);
+        moveBack();
         break;
       case 3:
-        moveLeft(100,5);
+        moveLeft();
         break;
       case 4:
-        moveright(100,5);
+        moveright();
         break;
       case 5:
-        moveFront(0,1);
-        moveBack(0,1);
         break;
       }
     }
