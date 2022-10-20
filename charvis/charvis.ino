@@ -30,33 +30,46 @@ void loop() {
   
 }
 
+void offLED(){
+  digitalWrite(LED_FL, LOW);
+  digitalWrite(LED_FR, LOW);
+  digitalWrite(LED_BL, LOW);
+  digitalWrite(LED_BR, LOW);
+}
+
 
 void moveFront() {
-    digitalWrite(LED_FR, HIGH);
-    
-    analogWrite(FL_1, 128);
-    analogWrite(FR_1, 128);
-    analogWrite(BL_1, 128);
-    analogWrite(BR_1, 128);
-  }
+  digitalWrite(LED_FL, HIGH);
+  digitalWrite(LED_FR, HIGH);
+  digitalWrite(LED_BL, LOW);
+  digitalWrite(LED_BR, LOW);
+  
+  analogWrite(FL_1, 128);
+  analogWrite(FR_1, 128);
+  analogWrite(BL_1, 128);
+  analogWrite(BR_1, 128);
 }
 
 void moveLeft() {
   digitalWrite(LED_FL, HIGH);
   digitalWrite(LED_BL, HIGH);
+  digitalWrite(LED_FR, LOW);
+  digitalWrite(LED_BR, LOW);
   
-  analogWrite(BL_1, 128/10);
-  analogWrite(FL_1, 128/10);
+  analogWrite(BL_1, 128/3);
+  analogWrite(FL_1, 128/3);
   analogWrite(BR_1, 128);
   analogWrite(FR_1, 128);
 }
 
-void moveright() {
+void moveRight() {
   digitalWrite(LED_FR, HIGH);
   digitalWrite(LED_BR, HIGH);
+  digitalWrite(LED_FL, LOW);
+  digitalWrite(LED_BL, LOW);
   
-  analogWrite(BR_1, 128/10);
-  analogWrite(FR_1, 128/10);
+  analogWrite(BR_1, 128/3);
+  analogWrite(FR_1, 128/3);
   analogWrite(BL_1, 128);
   analogWrite(FL_1, 128);
 }
@@ -64,6 +77,8 @@ void moveright() {
 void moveBack() {
   digitalWrite(LED_BL, HIGH);
   digitalWrite(LED_BR, HIGH);
+  digitalWrite(LED_FL, LOW);
+  digitalWrite(LED_FR, LOW);
   
   analogWrite(FL_2, 128);
   analogWrite(FR_2, 128);
