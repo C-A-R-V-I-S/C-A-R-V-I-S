@@ -308,7 +308,8 @@ void loop() {
         moveright(100,5);
         break;
       case 5:
-        moveFront(0,5);
+        moveFront(0,1);
+        moveBack(0,1);
         break;
       }
     }
