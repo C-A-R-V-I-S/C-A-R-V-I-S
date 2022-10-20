@@ -30,69 +30,58 @@ void loop() {
   
 }
 
+void offLED(){
+  digitalWrite(LED_FL, LOW);
+  digitalWrite(LED_FR, LOW);
+  digitalWrite(LED_BL, LOW);
+  digitalWrite(LED_BR, LOW);
+}
 
-void moveFront(int spd, float t) {
-  //spd는 0~255의 값으로 모터 속력을 의미
-  //t는 time의 약어로 몇초 동안 이동할지를 의미
-  unsigned char prev_m = 0;
-  unsigned char curr_m = 0;
-  curr_m = millis();
-  if(curr_m - prev_m == t*1000){
-    return;
-  }
+
+void moveFront() {
   digitalWrite(LED_FL, HIGH);
   digitalWrite(LED_FR, HIGH);
+  digitalWrite(LED_BL, LOW);
+  digitalWrite(LED_BR, LOW);
   
-  analogWrite(FL_1, spd);
-  analogWrite(FR_1, spd);
+  analogWrite(FL_1, 128);
+  analogWrite(FR_1, 128);
+  analogWrite(BL_1, 128);
+  analogWrite(BR_1, 128);
 }
 
-void moveLeft(int spd, float t) {
-  //spd는 0~255의 값으로 모터 속력을 의미
-  //t는 time의 약어로 몇ms 동안 이동할지를 의미
-  unsigned char prev_m = 0;
-  unsigned char curr_m = 0;
-  curr_m = millis();
-  if(curr_m - prev_m == t*1000){
-    return;
-  }
+void moveLeft() {
   digitalWrite(LED_FL, HIGH);
   digitalWrite(LED_BL, HIGH);
+  digitalWrite(LED_FR, LOW);
+  digitalWrite(LED_BR, LOW);
   
-  analogWrite(FL_1, spd/10);
-  analogWrite(BR_1, spd/10);
-  analogWrite(FR_1, spd);
+  analogWrite(BL_1, 128/3);
+  analogWrite(FL_1, 128/3);
+  analogWrite(BR_1, 128);
+  analogWrite(FR_1, 128);
 }
 
-void moveright(int spd, float t) {
-  //spd는 0~255의 값으로 모터 속력을 의미
-  //t는 time의 약어로 몇ms 동안 이동할지를 의미
-  unsigned char prev_m = 0;
-  unsigned char curr_m = 0;
-  curr_m = millis();
-  if(curr_m - prev_m == t*1000){
-    return;
-  }
+void moveRight() {
   digitalWrite(LED_FR, HIGH);
   digitalWrite(LED_BR, HIGH);
+  digitalWrite(LED_FL, LOW);
+  digitalWrite(LED_BL, LOW);
   
-  analogWrite(FR_1, spd/10);
-  analogWrite(BL_1, spd/10);
-  analogWrite(FL_1, spd);
+  analogWrite(BR_1, 128/3);
+  analogWrite(FR_1, 128/3);
+  analogWrite(BL_1, 128);
+  analogWrite(FL_1, 128);
 }
 
-void moveBack(int spd, float t) {
-  //spd는 0~255의 값으로 모터 속력을 의미
-  //t는 time의 약어로 몇ms 동안 이동할지를 의미
-  unsigned char prev_m = 0;
-  unsigned char curr_m = 0;
-  curr_m = millis();
-  if(curr_m - prev_m == t*1000){
-    return;
-  }
+void moveBack() {
   digitalWrite(LED_BL, HIGH);
   digitalWrite(LED_BR, HIGH);
+  digitalWrite(LED_FL, LOW);
+  digitalWrite(LED_FR, LOW);
   
-  analogWrite(FL_2, spd);
-  analogWrite(FR_2, spd);
+  analogWrite(FL_2, 128);
+  analogWrite(FR_2, 128);
+  analogWrite(BL_2, 128);
+  analogWrite(BR_2, 128);
 }
