@@ -85,3 +85,9 @@ void moveBack() {
   analogWrite(BL_2, 128);
   analogWrite(BR_2, 128);
 }
+
+void StopMotor(){
+  for(int i=0;i<8;i++){
+    digitalWrite(i+2, LOW);
+  }
+}
