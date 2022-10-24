@@ -12,52 +12,40 @@ float F_L,F_R,B_L,B_R = 0;
 
 void F_L_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 함수
 {
-  float Front_Left_distance = 0;  //IR센서의 거리 저장 변수 선언 
   float Front_Left_data = 0;      //IR센서로 부터 측정값 읽는 변수 선언
 
   //적외선 거리 센서로 부터 측정값을 읽어온다
   Front_Left_data = analogRead(Front_Left_Ir);
   //측정값을 통해 거리를 계산                   
-  Front_Left_distance =(6762/(Front_Left_data-9))-4;         
-  //delay(500);                                                  
-  F_L = Front_Left_distance;                              
+  F_L =(6762/(Front_Left_data-9))-4;                                                                           
 }
 
 void F_R_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 함수
 {
-  float Front_Right_distance = 0;  //IR센서의 거리 저장 변수 선언 
   float Front_Right_data = 0;      //IR센서로 부터 측정값 읽는 변수 선언
 
   //적외선 거리 센서로 부터 측정값을 읽어온다
   Front_Right_data = analogRead(Front_Right_Ir);
   //측정값을 통해 거리를 계산                   
-  Front_Right_distance =(6762/(Front_Right_data-9))-4;         
-  //delay(500);                                                  
-  F_R = Front_Right_distance;                              
+  F_R =(6762/(Front_Right_data-9))-4;                                                                               
 }
 
 void B_L_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 함수
 {
-  float Back_Left_distance = 0;  //IR센서의 거리 저장 변수 선언 
   float Back_Left_data = 0;      //IR센서로 부터 측정값 읽는 변수 선언
 
   //적외선 거리 센서로 부터 측정값을 읽어온다
   Back_Left_data = analogRead(Back_Left_Ir);
   //측정값을 통해 거리를 계산                   
-  Back_Left_distance =(6762/(Back_Left_data-9))-4;         
-  //delay(500);                                                  
-  B_L = Back_Left_distance;                              
+  B_L =(6762/(Back_Left_data-9))-4;                                                                                
 }
 
 void B_R_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 함수
 {
-  float Back_Right_distance = 0;  //IR센서의 거리 저장 변수 선언 
   float Back_Right_data = 0;      //IR센서로 부터 측정값 읽는 변수 선언
 
   //적외선 거리 센서로 부터 측정값을 읽어온다
   Back_Right_data = analogRead(Back_Right_Ir);
   //측정값을 통해 거리를 계산                   
-  Back_Right_distance =(6762/(Back_Right_data-9))-4;         
-  //delay(500);                                                  
-  B_R = Back_Right_distance;                              
+  B_R =(6762/(Back_Right_data-9))-4;                                                                              
 }
