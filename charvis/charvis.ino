@@ -37,25 +37,9 @@ void setup() {
 
 void loop() {
   if(isLED_On){
-    offLED()
+    offLED();
   }
-  digitalWrite(LED_FL, isTurnLight);
-  digitalWrite(LED_FR, isTurnLight);
-  digitalWrite(LED_BL, LOW);
-  digitalWrite(LED_BR, LOW);
-  digitalWrite(LED_FL, isTurnLight);
-  digitalWrite(LED_BL, isTurnLight);
-  digitalWrite(LED_FR, LOW);
-  digitalWrite(LED_BR, LOW);
-  digitalWrite(LED_FR, isTurnLight);
-  digitalWrite(LED_BR, isTurnLight);
-  digitalWrite(LED_FL, LOW);
-  digitalWrite(LED_BL, LOW);
-  digitalWrite(LED_BL, isTurnLight);
-  digitalWrite(LED_BR, isTurnLight);
-  digitalWrite(LED_FL, LOW);
-  digitalWrite(LED_FR, LOW);
-  //LED 제어 아래에서 isLED_On 변수 사용해주세요
+  //LED 함수 아래에서 isLED_On 변수 사용해주세요
 }
 
 void offLED(){
@@ -67,6 +51,10 @@ void offLED(){
 
 
 void moveFront() {  
+  digitalWrite(LED_FL, 1);
+  digitalWrite(LED_FR, 1);
+  digitalWrite(LED_BL, LOW);
+  digitalWrite(LED_BR, LOW);
   analogWrite(FL_1, 200);
   analogWrite(FR_1, 200);
   analogWrite(BL_1, 200);
@@ -78,6 +66,10 @@ void moveFront() {
 }
 
 void moveLeft() {
+  digitalWrite(LED_FL, isTurnLight);
+  digitalWrite(LED_BL, isTurnLight);
+  digitalWrite(LED_FR, LOW);
+  digitalWrite(LED_BR, LOW);
   digitalWrite(BL_1, 200/3);
   digitalWrite(FL_1, 200/3);
   digitalWrite(BR_1, 200);
@@ -89,6 +81,10 @@ void moveLeft() {
 }
 
 void moveRight() {
+  digitalWrite(LED_FR, isTurnLight);
+  digitalWrite(LED_BR, isTurnLight);
+  digitalWrite(LED_FL, LOW);
+  digitalWrite(LED_BL, LOW);
   analogWrite(BR_1, 200/3);
   analogWrite(FR_1, 200/3);
   analogWrite(BL_1, 200);
@@ -100,6 +96,10 @@ void moveRight() {
 }
 
 void moveBack() {
+  digitalWrite(LED_BL, 1);
+  digitalWrite(LED_BR, 1);
+  digitalWrite(LED_FL, LOW);
+  digitalWrite(LED_FR, LOW);
   analogWrite(FL_2, 200);
   analogWrite(FR_2, 200);
   analogWrite(BL_2, 200);
