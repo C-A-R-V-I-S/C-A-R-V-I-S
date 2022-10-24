@@ -12,6 +12,15 @@
 #define LED_BL 24
 #define LED_BR 25
 
+static unsigned long curr_m = 0;
+static unsigned long prev_m = 0;
+// 위 두 변수에는 loop() 함수에서 millis() 호출해서 값 넣어주세요
+
+static char isTurnLight = 1;
+
+static bool isLED_On = true;
+// loop() 함수에서 500ms 간격으로 1 <-> 0 변환 해주세요
+
 // 구동 바퀴 및 LED 위치
 // 첫 번째의 F(front)와 B(back)은 앞쪽, 뒤쪽
 // 두 번째의 L(left)와 R(right)은 왼쪽, 오른쪽 
@@ -27,7 +36,26 @@ void setup() {
 }
 
 void loop() {
-  
+  if(isLED_On){
+    offLED()
+  }
+  digitalWrite(LED_FL, isTurnLight);
+  digitalWrite(LED_FR, isTurnLight);
+  digitalWrite(LED_BL, LOW);
+  digitalWrite(LED_BR, LOW);
+  digitalWrite(LED_FL, isTurnLight);
+  digitalWrite(LED_BL, isTurnLight);
+  digitalWrite(LED_FR, LOW);
+  digitalWrite(LED_BR, LOW);
+  digitalWrite(LED_FR, isTurnLight);
+  digitalWrite(LED_BR, isTurnLight);
+  digitalWrite(LED_FL, LOW);
+  digitalWrite(LED_BL, LOW);
+  digitalWrite(LED_BL, isTurnLight);
+  digitalWrite(LED_BR, isTurnLight);
+  digitalWrite(LED_FL, LOW);
+  digitalWrite(LED_FR, LOW);
+  //LED 제어 아래에서 isLED_On 변수 사용해주세요
 }
 
 void offLED(){
@@ -38,12 +66,7 @@ void offLED(){
 }
 
 
-void moveFront() {
-  digitalWrite(LED_FL, HIGH);
-  digitalWrite(LED_FR, HIGH);
-  digitalWrite(LED_BL, LOW);
-  digitalWrite(LED_BR, LOW);
-  
+void moveFront() {  
   analogWrite(FL_1, 200);
   analogWrite(FR_1, 200);
   analogWrite(BL_1, 200);
@@ -55,11 +78,6 @@ void moveFront() {
 }
 
 void moveLeft() {
-  digitalWrite(LED_FL, HIGH);
-  digitalWrite(LED_BL, HIGH);
-  digitalWrite(LED_FR, LOW);
-  digitalWrite(LED_BR, LOW);
-  
   digitalWrite(BL_1, 200/3);
   digitalWrite(FL_1, 200/3);
   digitalWrite(BR_1, 200);
@@ -71,11 +89,6 @@ void moveLeft() {
 }
 
 void moveRight() {
-  digitalWrite(LED_FR, HIGH);
-  digitalWrite(LED_BR, HIGH);
-  digitalWrite(LED_FL, LOW);
-  digitalWrite(LED_BL, LOW);
-  
   analogWrite(BR_1, 200/3);
   analogWrite(FR_1, 200/3);
   analogWrite(BL_1, 200);
@@ -87,11 +100,6 @@ void moveRight() {
 }
 
 void moveBack() {
-  digitalWrite(LED_BL, HIGH);
-  digitalWrite(LED_BR, HIGH);
-  digitalWrite(LED_FL, LOW);
-  digitalWrite(LED_FR, LOW);
-  
   analogWrite(FL_2, 200);
   analogWrite(FR_2, 200);
   analogWrite(BL_2, 200);
