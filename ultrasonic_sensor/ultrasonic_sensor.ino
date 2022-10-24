@@ -7,7 +7,7 @@ float F_S,B_S = 0;
 //F_S:앞쪽 초음파센서의 값을 받아오는 변수
 //B_S:뒤쪽 초음파센서의 값을 받아오는 변수
 
-float F_Sonic()                        //거리값을 받아올 함수.     
+void F_Sonic()                        //거리값을 받아올 함수.     
 {
    float Front_Length = 0;            //앞쪽 초음파의 송수신 길이를 저장하는 변수 선언
    float Front_Distance = 0;          //최종거리 저장 변수 선언
@@ -22,12 +22,12 @@ float F_Sonic()                        //거리값을 받아올 함수.
    Front_Length = pulseIn(Front_Echo, HIGH);  //pulseIn 함수를 통해 echo핀에 초음파가 돌아오는 시간을 측정   
                                           
    //입력받은 신호를 거리로 계산
-   Front_Distance = ((float)(340*Front_Length)/10000)/2;
+   Front_Distance = Front_Length * 17 / 1000;
 
    F_S = Front_Distance;          
 }
 
-float B_Sonic()                        //거리값을 받아올 함수.     
+void B_Sonic()                        //거리값을 받아올 함수.     
 {
    float Back_Length = 0;             //뒤쪽 초음파의 송수신 길이를 저장하는 변수 선언
    float Back_Distance = 0;           //최종거리 저장 변수 선언
@@ -42,7 +42,7 @@ float B_Sonic()                        //거리값을 받아올 함수.
    Back_Length = pulseIn(Back_Echo, HIGH);     //pulseIn 함수를 통해 Back_Echo핀에 초음파가 돌아오는 시간을 측정   
                                           
    //입력받은 신호를 거리로 계산
-   Back_Distance = ((float)(340*Back_Length)/10000)/2;      
+   Back_Distance = Back_Length * 17 / 1000;  
    
    B_S = Back_Distance;                                    
 }
