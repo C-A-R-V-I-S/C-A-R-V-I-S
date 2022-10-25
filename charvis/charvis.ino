@@ -33,12 +33,27 @@ void setup() {
   for(int i=2;i<10;i++){
     pinMode(i, OUTPUT);
   }
+  for(int i=22;i<26;i++){
+    pinMode(i, OUTPUT);
+  }
 }
 
 void loop() {
-  if(isLED_On){
+  curr_m = millis();
+  if(curr_m - prev_m > 400){
+    prev_m = curr_m;
     offLED();
   }
+  //moveFront();
+  moveLeft();
+//  delay(1000);
+//  delay(1000);
+//  moveRight();
+//  delay(1000);
+//  moveBack();
+//  delay(1000);
+//  StopMotor();
+//  delay(500);
   //LED 함수 아래에서 isLED_On 변수 사용해주세요
 }
 
@@ -47,8 +62,8 @@ void offLED(){
   digitalWrite(LED_FR, LOW);
   digitalWrite(LED_BL, LOW);
   digitalWrite(LED_BR, LOW);
+  delay(400);
 }
-
 
 void moveFront() {  
   digitalWrite(LED_FL, 1);
@@ -78,6 +93,7 @@ void moveLeft() {
   digitalWrite(FL_2, 0);
   digitalWrite(BR_2, 0);
   digitalWrite(FR_2, 0);
+  delay(400);
 }
 
 void moveRight() {
