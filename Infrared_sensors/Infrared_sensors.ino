@@ -17,6 +17,7 @@ void F_L_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 
   //적외선 거리 센서로 부터 측정값을 읽어온다
   Front_Left_data = analogRead(Front_Left_Ir);
   //측정값을 통해 거리를 계산                   
+
   F_L = 10650.08 * pow(Front_Left_data,-0.935) - 10;  //단위는 cm
 }
 
@@ -27,7 +28,7 @@ void F_R_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 
   //적외선 거리 센서로 부터 측정값을 읽어온다
   Front_Right_data = analogRead(Front_Right_Ir);
   //측정값을 통해 거리를 계산                   
-  F_R = 10650.08 * pow(Front_Right_data,-0.935) - 10;  //단위는 cm                                                                            
+  F_R = 10650.08 * pow(Front_Right_data,-0.935) - 10;  //단위는 cm
 }
 
 void B_L_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 함수
@@ -37,7 +38,8 @@ void B_L_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 
   //적외선 거리 센서로 부터 측정값을 읽어온다
   Back_Left_data = analogRead(Back_Left_Ir);
   //측정값을 통해 거리를 계산                   
-  B_L = 10650.08 * pow(Front_Left_data,-0.935) - 10;  //단위는 cm                                                                               
+
+  B_L = 10650.08 * pow(Back_Left_data,-0.935) - 10;  //단위는 cm
 }
 
 void B_R_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 함수
@@ -47,5 +49,5 @@ void B_R_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 
   //적외선 거리 센서로 부터 측정값을 읽어온다
   Back_Right_data = analogRead(Back_Right_Ir);
   //측정값을 통해 거리를 계산                   
-  B_R = 10650.08 * pow(Front_Left_data,-0.935) - 10;  //단위는 cm                                                                             
+  B_R = 10650.08 * pow(Back_Right_data,-0.935) - 10;  //단위는 cm                                                                                                                                                         
 }

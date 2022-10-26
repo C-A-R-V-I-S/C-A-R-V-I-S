@@ -12,9 +12,9 @@ void F_Sonic()                        //거리값을 받아올 함수.
    float Front_Length = 0;            //앞쪽 초음파의 송수신 길이를 저장하는 변수 선언
    //Front_Trig 신호 발생 (10us)
    digitalWrite(Front_Trig,LOW);
-   delay(2);
+   delayMicroseconds(2);
    digitalWrite(Front_Trig,HIGH);
-   delay(10);
+   delayMicroseconds(10);
    digitalWrite(Front_Trig,LOW);
 
    //Front_Echo 신호 입력                    
@@ -29,9 +29,9 @@ void B_Sonic()                        //거리값을 받아올 함수.
    float Back_Length = 0;             //뒤쪽 초음파의 송수신 길이를 저장하는 변수 선언
    //Back_Trig 신호 발생 (10us)
    digitalWrite(Back_Trig,LOW);       
-   delay(2);
+   delayMicroseconds(2);
    digitalWrite(Back_Trig,HIGH);      
-   delay(10);
+   delayMicroseconds(10);
    digitalWrite(Back_Trig,LOW);      
 
    //Back_Echo 신호 입력                       
