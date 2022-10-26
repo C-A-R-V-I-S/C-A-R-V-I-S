@@ -24,51 +24,46 @@
 
 #include <SoftwareSerial.h>
 
-
+static char isTurnLight = 1;
 // 초음파 센서
 
 float F_S = 0,B_S = 0;
 //F_S:앞쪽 초음파센서의 값을 받아오는 변수
 //B_S:뒤쪽 초음파센서의 값을 받아오는 변수
-float F_Sonic()                        //거리값을 받아올 함수.     
+void F_Sonic()                        //거리값을 받아올 함수.     
 {
    float Front_Length = 0;            //앞쪽 초음파의 송수신 길이를 저장하는 변수 선언
-   float Front_Distance = 0;          //최종거리 저장 변수 선언
    //Front_Trig 신호 발생 (10us)
    digitalWrite(Front_Trig,LOW);
-   delay(2);
+   delayMicroseconds(2);
    digitalWrite(Front_Trig,HIGH);
-   delay(10);
+   delayMicroseconds(10);
    digitalWrite(Front_Trig,LOW);
 
    //Front_Echo 신호 입력                    
    Front_Length = pulseIn(Front_Echo, HIGH);  //pulseIn 함수를 통해 echo핀에 초음파가 돌아오는 시간을 측정   
                                           
    //입력받은 신호를 거리로 계산
-   Front_Distance = ((float)(340*Front_Length)/10000)/2;
-
-   F_S = Front_Distance;          
+   F_S = Front_Length * 17 / 1000;
 }
 
-float B_Sonic()                        //거리값을 받아올 함수.     
+void B_Sonic()                        //거리값을 받아올 함수.     
 {
    float Back_Length = 0;             //뒤쪽 초음파의 송수신 길이를 저장하는 변수 선언
-   float Back_Distance = 0;           //최종거리 저장 변수 선언
    //Back_Trig 신호 발생 (10us)
    digitalWrite(Back_Trig,LOW);       
-   delay(2);
+   delayMicroseconds(2);
    digitalWrite(Back_Trig,HIGH);      
-   delay(10);
+   delayMicroseconds(10);
    digitalWrite(Back_Trig,LOW);      
 
    //Back_Echo 신호 입력                       
    Back_Length = pulseIn(Back_Echo, HIGH);     //pulseIn 함수를 통해 Back_Echo핀에 초음파가 돌아오는 시간을 측정   
                                           
    //입력받은 신호를 거리로 계산
-   Back_Distance = ((float)(340*Back_Length)/10000)/2;      
-   
-   B_S = Back_Distance;                                    
+   B_S = Back_Length * 17 / 1000;                                      
 }
+
 
 
 //IR센서
@@ -79,70 +74,47 @@ float F_L,F_R,B_L,B_R = 0;
 //B_L : 왼쪽 뒤 IR센서 측정값 받는 변수
 //B_R : 오른쪽 뒤 IR센서 측정값 받는 변수
 
-float F_L_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 함수
+void F_L_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 함수
 {
-  float Front_Left_distance = 0;  //IR센서의 거리 저장 변수 선언 
   float Front_Left_data = 0;      //IR센서로 부터 측정값 읽는 변수 선언
-  float Front_Left_volt = 0;      //IR센서의 측정값을 다듬을 변수 선언
 
   //적외선 거리 센서로 부터 측정값을 읽어온다
-  Front_Left_data = analogRead(Front_Left_Ir);                   
-  //측정한 volt값을 0에서 5000사이의 값으로 변환
-  Front_Left_volt = map(Front_Left_data, 0, 1023, 0, 5000);      
-  //측정값을 통해 거리를 계산
-  Front_Left_distance = (21.61/(Front_Left_volt-0.1696))*1000;   
-  //delay(500);                                                  
-  F_L = Front_Left_distance;                              
+  Front_Left_data = analogRead(Front_Left_Ir);
+  //측정값을 통해 거리를 계산                   
+
+  F_L = 10650.08 * pow(Front_Left_data,-0.935) - 10;  //단위는 cm
 }
 
-float F_R_IR()                   //오른쪽 앞 IR센서의 측정값 저장하는 함수       
+void F_R_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 함수
 {
-  float Front_Right_distance = 0;  //IR센서의 거리 저장 변수 선언 
   float Front_Right_data = 0;      //IR센서로 부터 측정값 읽는 변수 선언
-  float Front_Right_volt = 0;      //IR센서의 측정값을 다듬을 변수 선언
 
   //적외선 거리 센서로 부터 측정값을 읽어온다
-  Front_Right_data = analogRead(Front_Right_Ir);                 
-  //측정한 volt값을 0에서 5000사이의 값으로 변환
-  Front_Right_volt = map(Front_Right_data, 0, 1023, 0, 5000);      
-  //측정값을 통해 거리를 계산  
-  Front_Right_distance = (21.61/(Front_Right_volt-0.1696))*1000; 
-  //delay(500);                                                  
-  F_R = Front_Right_distance;                                    
+  Front_Right_data = analogRead(Front_Right_Ir);
+  //측정값을 통해 거리를 계산                   
+  F_R = 10650.08 * pow(Front_Right_data,-0.935) - 10;  //단위는 cm
 }
 
-float B_L_IR()                   //왼쪽 뒤 IR센서의 측정값 저장하는 함수        
+void B_L_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 함수
 {
-  float Back_Left_distance = 0;    //IR센서의 거리 저장 변수 선언 
-  float Back_Left_data = 0;        //IR센서로 부터 측정값 읽는 변수 선언
-  float Back_Left_volt = 0;        //IR센서의 측정값을 다듬을 변수 선언
+  float Back_Left_data = 0;      //IR센서로 부터 측정값 읽는 변수 선언
 
   //적외선 거리 센서로 부터 측정값을 읽어온다
-  Back_Left_data = analogRead(Back_Left_Ir);                     
-  //측정한 volt값을 0에서 5000사이의 값으로 변환
-  Back_Left_volt = map(Back_Left_data, 0, 1023, 0, 5000);        
-  //측정값을 통해 거리를 계산
-  Back_Left_distance = (21.61/(Back_Left_volt-0.1696))*1000;     
-  //delay(500);                                                  
-  B_L = Back_Left_distance;                                    
+  Back_Left_data = analogRead(Back_Left_Ir);
+  //측정값을 통해 거리를 계산                   
+
+  B_L = 10650.08 * pow(Back_Left_data,-0.935) - 10;  //단위는 cm
 }
 
-float B_R_IR()                   //오른쪽 뒤 IR센서의 측정값 저장하는 함수       
+void B_R_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 함수
 {
-  float Back_Right_distance = 0;   //IR센서의 거리 저장 변수 선언 
-  float Back_Right_data = 0;       //IR센서로 부터 측정값 읽는 변수 선언
-  float Back_Right_volt = 0;       //IR센서의 측정값을 다듬을 변수 선언
+  float Back_Right_data = 0;      //IR센서로 부터 측정값 읽는 변수 선언
 
   //적외선 거리 센서로 부터 측정값을 읽어온다
-  Back_Right_data = analogRead(Back_Right_Ir);                   
-  //측정한 volt값을 0에서 5000사이의 값으로 변환
-  Back_Right_volt = map(Back_Right_data, 0, 1023, 0, 5000);      
-  //측정값을 통해 거리를 계산
-  Back_Right_distance = (21.61/(Back_Right_volt-0.1696))*1000;   
-  //delay(500);                                                  
-  B_R = Back_Right_distance;                                    
+  Back_Right_data = analogRead(Back_Right_Ir);
+  //측정값을 통해 거리를 계산                   
+  B_R = 10650.08 * pow(Back_Right_data,-0.935) - 10;  //단위는 cm                                                                                                                                                         
 }
-
 
 // 모터
 // 구동 바퀴 위치
@@ -157,55 +129,74 @@ void offLED(){
   digitalWrite(LED_FR, LOW);
   digitalWrite(LED_BL, LOW);
   digitalWrite(LED_BR, LOW);
+  delay(400);
 }
 
-
-void moveFront() {
-  digitalWrite(LED_FL, HIGH);
-  digitalWrite(LED_FR, HIGH);
+void moveFront() {  
+  digitalWrite(LED_FL, 1);
+  digitalWrite(LED_FR, 1);
   digitalWrite(LED_BL, LOW);
   digitalWrite(LED_BR, LOW);
-  
-  analogWrite(FL_1, 128);
-  analogWrite(FR_1, 128);
-  analogWrite(BL_1, 128);
-  analogWrite(BR_1, 128);
+  analogWrite(FL_1, 200);
+  analogWrite(FR_1, 200);
+  analogWrite(BL_1, 200);
+  analogWrite(BR_1, 200);
+  analogWrite(FL_2, 0);
+  analogWrite(FR_2, 0);
+  analogWrite(BL_2, 0);
+  analogWrite(BR_2, 0);
 }
 
 void moveLeft() {
-  digitalWrite(LED_FL, HIGH);
-  digitalWrite(LED_BL, HIGH);
+  digitalWrite(LED_FL, isTurnLight);
+  digitalWrite(LED_BL, isTurnLight);
   digitalWrite(LED_FR, LOW);
   digitalWrite(LED_BR, LOW);
-  
-  analogWrite(BL_1, 128/3);
-  analogWrite(FL_1, 128/3);
-  analogWrite(BR_1, 128);
-  analogWrite(FR_1, 128);
+  digitalWrite(BL_1, 200/3);
+  digitalWrite(FL_1, 200/3);
+  digitalWrite(BR_1, 200);
+  digitalWrite(FR_1, 200);  
+  digitalWrite(BL_2, 0);
+  digitalWrite(FL_2, 0);
+  digitalWrite(BR_2, 0);
+  digitalWrite(FR_2, 0);
+  delay(400);
 }
 
 void moveRight() {
-  digitalWrite(LED_FR, HIGH);
-  digitalWrite(LED_BR, HIGH);
+  digitalWrite(LED_FR, isTurnLight);
+  digitalWrite(LED_BR, isTurnLight);
   digitalWrite(LED_FL, LOW);
   digitalWrite(LED_BL, LOW);
-  
-  analogWrite(BR_1, 128/3);
-  analogWrite(FR_1, 128/3);
-  analogWrite(BL_1, 128);
-  analogWrite(FL_1, 128);
+  analogWrite(BR_1, 200/3);
+  analogWrite(FR_1, 200/3);
+  analogWrite(BL_1, 200);
+  analogWrite(FL_1, 200);
+  analogWrite(BR_2, 0);
+  analogWrite(FR_2, 0);
+  analogWrite(BL_2, 0);
+  analogWrite(FL_2, 0);
 }
 
 void moveBack() {
-  digitalWrite(LED_BL, HIGH);
-  digitalWrite(LED_BR, HIGH);
+  digitalWrite(LED_BL, 1);
+  digitalWrite(LED_BR, 1);
   digitalWrite(LED_FL, LOW);
   digitalWrite(LED_FR, LOW);
-  
-  analogWrite(FL_2, 128);
-  analogWrite(FR_2, 128);
-  analogWrite(BL_2, 128);
-  analogWrite(BR_2, 128);
+  analogWrite(FL_2, 200);
+  analogWrite(FR_2, 200);
+  analogWrite(BL_2, 200);
+  analogWrite(BR_2, 200);
+  analogWrite(FL_1, 0);
+  analogWrite(FR_1, 0);
+  analogWrite(BL_1, 0);
+  analogWrite(BR_1, 0);
+}
+
+void StopMotor(){
+  for(int i=0;i<8;i++){
+    digitalWrite(i+2, LOW);
+  }
 }
 
 
@@ -255,14 +246,27 @@ void setup() {
   for(int i=26;i<30;i++){
     pinMode(i, INPUT);
   }
-  pinMode(Front_Trig,INPUT);
-  pinMode(Front_Echo, OUTPUT);
-  pinMode(Back_Trig,INPUT); 
-  pinMode(Back_Echo, OUTPUT);
+  pinMode(Front_Trig,OUTPUT);
+  pinMode(Front_Echo, INPUT);
+  pinMode(Back_Trig,OUTPUT); 
+  pinMode(Back_Echo, INPUT);
   Serial.println("CARVIS START!"); 
 }
+static unsigned long curr_m,prev_m=0;
 
 void loop() {
+  
+  curr_m = millis();
+  if(curr_m - prev_m > 400){
+    prev_m = curr_m;
+    if(isTurnLight == 0){
+      isTurnLight = 1;
+    }
+    else{
+      offLED();
+      isTurnLight = 0;
+    }
+  }
     BT();
     if(mode == 0){
       F_Sonic();
@@ -272,10 +276,10 @@ void loop() {
       B_L_IR();
       B_R_IR();
       
-      if(F_S < 20){ // 앞족에서 거리에 물체가 감지 되면
+      if(F_S < 10){ // 앞족에서 거리에 물체가 감지 되면
         if(F_L < 10 && F_R < 10 ){ // 앞쪽 양측에서 물체가 감지 되면
           if(B_L > 10){ // 왼쪽 뒤에 물체가 감지 되지 않으면
-            moveright();
+            moveRight();
             delay(5);
             moveBack();
             delay(5);
@@ -296,7 +300,7 @@ void loop() {
           
         }
         else if(F_L < 10){ // 좌측에만 물체가 감지 되면
-            moveright(); // 우회전
+            moveRight(); // 우회전
         }
         else if(F_R < 10){ // 우측에만 물체가 감지 되면
             moveLeft(); // 좌회전
@@ -311,17 +315,23 @@ void loop() {
       {
       case 1:
         moveFront();
+        offLED();
         break;
       case 2:
         moveBack();
+        offLED();
         break;
       case 3:
         moveLeft();
+        offLED();
         break;
       case 4:
-        moveright();
+        moveRight();
+        offLED();
         break;
       case 5:
+        StopMotor();
+        offLED();
         break;
       }
     }

@@ -52,5 +52,5 @@ void B_R_IR()                   //왼쪽 앞 IR센서의 측정값 저장하는 
   // 아날로그값을 volt 단위로 변환
   float volts = (float)Back_Right_data * VOLTS_PER_UNIT;
   // 측정전압에 따른 cm단위 거리 계산
-  B_R = 60.495 * pow(volts,-1.1904);                                                                                                                                                    
+  B_R = 60.495 * pow(volts,-1.1904);
 }
